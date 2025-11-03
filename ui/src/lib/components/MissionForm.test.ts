@@ -1,0 +1,17 @@
+import { render, fireEvent } from '@testing-library/svelte';
+import { describe, it, expect, vi } from 'vitest';
+import MissionForm from './MissionForm.svelte';
+
+describe('MissionForm', () => {
+  it('dispatches submit event with payload', async () => {
+    const { getByText, getByLabelText, component } = render(MissionForm);
+    const handler = vi.fn();
+    component.$on('submit', handler);
+
+    await fireEvent.input(getByLabelText('Titre'), { target: { value: 'Mission test' } });
+    await fireEvent.input(getByLabelText('Contexte'), { target: { value: 'Contexte' } });
+    await fireEvent.click(getByText('Ajouter'));
+
+    expect(handler).toHaveBeenCalled();
+  });
+});

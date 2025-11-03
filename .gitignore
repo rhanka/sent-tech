@@ -1,0 +1,11 @@
+node_modules
+pnpm-lock.yaml
+.DS_Store
+.env
+.env.local
+.e2e-artifacts
+coverage
+build
+.svelte-kit
+.vscode
+.idea

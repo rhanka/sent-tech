@@ -1,0 +1,6 @@
+# CI/CD
+
+- Toute modification de pipelines doit conserver l'utilisation de GitHub Actions et des cibles Make (`lint`, `test`, `build`).
+- Les workflows doivent installer les dépendances via `pnpm install` et réutiliser les commandes déclarées dans le Makefile.
+- Le déploiement de la SPA SvelteKit passe par GitHub Pages (`actions/upload-pages-artifact` + `actions/deploy-pages`).
+- Fournis des variables par défaut sûres (ex: `VITE_API_BASE_URL`) pour permettre l'exécution en CI sans secrets.
