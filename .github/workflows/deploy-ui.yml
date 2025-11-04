@@ -35,6 +35,8 @@ jobs:
         run: make build-ui
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL || 'https://api.example.com/api/v1' }}
+      - name: Disable Jekyll processing
+        run: touch ui/build/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -1,9 +1,9 @@
-# SENT-tech · Base Règles (gpt-5-codex)
+# SENT-tech · Règles de base (gpt-5-codex)
 
-Ces instructions s'appliquent à tout le dépôt et sont optimisées pour le modèle **gpt-5-codex**.
+Ces consignes couvrent tout le dépôt et sont pensées pour un flux de travail **gpt-5-codex**.
 
-- Utilise `pnpm` pour toute commande Node et respecte la structure workspaces (`sent-tech-api`, `sent-tech-ui`, `sent-tech-e2e`).
-- Préfère TypeScript strict (ESM) et le style Hono/SvelteKit déjà en place. Pas de librairies supplémentaires hors stack autorisé.
-- Les tests doivent rester exécutables via `make test`, `make test-api`, `make test-ui`, `make test-e2e` et être compatibles CI.
-- Documente les nouvelles commandes dans les README concernés et maintiens la cohérence avec le projet de référence.
-- Pour la SPA statique, veille à ce que les chemins d'assets soient compatibles GitHub Pages.
+- Utilise `pnpm` pour toutes les commandes Node et respecte la structure des workspaces (`sent-tech-api`, `sent-tech-ui`, `sent-tech-e2e`).
+- Code en TypeScript strict (ESM) et suis les patterns Hono/SvelteKit existants. N'ajoute aucune librairie hors stack autorisée.
+- Garantis l'exécution des tests via `make test`, `make test-api`, `make test-ui` et `make test-e2e`, localement comme en CI.
+- Documente toute nouvelle commande ou variable d'environnement dans les README concernés en restant cohérent avec le projet de référence.
+- Pour la SPA statique, assure-toi que les assets (routes, fichiers) fonctionnent sur GitHub Pages.
