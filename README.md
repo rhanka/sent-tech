@@ -23,7 +23,7 @@ make install
 - `make build` : construit les artefacts UI (SPA statique) et API (`make build-ui`, `make build-api`).
 - `make migrate` : applique les migrations Drizzle (la base doit être démarrée via `docker compose up -d db`).
 - `make seed` : insère les données d'exemple dans Postgres (DB lancée via `docker compose up -d db`).
-- `make clean` : arrête la stack et supprime les volumes (y compris le cache pnpm partagé).
+- `make clean` : arrête la stack et supprime les volumes associés.
 
 > 💡 `make build-ui` accepte `UI_BUILD_API_BASE_URL=https://...` pour personnaliser la valeur injectée dans la SPA.
 
@@ -50,7 +50,7 @@ Consultez `api/.env.example` et `ui/.env.example`.
 Un script `scripts/ingest-cv.ts` permet de segmenter un CV brut et d'insérer les missions correspondantes dans Postgres (DB levée via `docker compose up -d db`) :
 
 ```bash
-docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-api exec tsx ../scripts/ingest-cv.ts ./data/cv.txt CV_2024_FR"
+docker compose run --rm workspace bash -lc "npm exec --workspace=sent-tech-api tsx ../scripts/ingest-cv.ts"
 ```
 
 ## Licences

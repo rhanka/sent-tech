@@ -7,30 +7,30 @@ DATABASE_URL?=postgres://senttech:senttech@db:5432/senttech
 .PHONY: install dev lint lint-api lint-ui test test-api test-ui test-e2e build build-api build-ui migrate seed clean
 
 define run_workspace
-	$(COMPOSE) run --rm $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; corepack enable; pnpm $(1)"
+	$(COMPOSE) run --rm $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; $(1)"
 endef
 
 dev:
 	$(COMPOSE) up --build
 
 install:
-	$(call run_workspace,install)
+	$(call run_workspace,npm install)
 
 lint: lint-api lint-ui
 
 lint-api:
-	$(call run_workspace,--filter sent-tech-api lint)
+	$(call run_workspace,npm run lint --workspace=sent-tech-api)
 
 lint-ui:
-	$(call run_workspace,--filter sent-tech-ui lint)
+	$(call run_workspace,npm run lint --workspace=sent-tech-ui)
 
 test: test-api test-ui test-e2e
 
 test-api:
-	$(call run_workspace,--filter sent-tech-api test)
+	$(call run_workspace,npm run test --workspace=sent-tech-api)
 
 test-ui:
-	$(call run_workspace,--filter sent-tech-ui test)
+	$(call run_workspace,npm run test --workspace=sent-tech-ui)
 
 test-e2e:
 	@$(COMPOSE) up -d db api
@@ -39,18 +39,18 @@ test-e2e:
 build: build-api build-ui
 
 build-api:
-	$(call run_workspace,--filter sent-tech-api build)
+	$(call run_workspace,npm run build --workspace=sent-tech-api)
 
 build-ui:
-	$(COMPOSE) run --rm -e VITE_API_BASE_URL=$(UI_BUILD_API_BASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; corepack enable; pnpm --filter sent-tech-ui build"
+	$(COMPOSE) run --rm -e VITE_API_BASE_URL=$(UI_BUILD_API_BASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; npm run build --workspace=sent-tech-ui"
 
 migrate:
 	@$(COMPOSE) up -d db
-	$(COMPOSE) run --rm -e DATABASE_URL=$(DATABASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; corepack enable; pnpm --filter sent-tech-api exec drizzle-kit push"
+	$(COMPOSE) run --rm -e DATABASE_URL=$(DATABASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; npm exec --workspace=sent-tech-api drizzle-kit push"
 
 seed:
 	@$(COMPOSE) up -d db
-	$(COMPOSE) run --rm -e DATABASE_URL=$(DATABASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; corepack enable; pnpm --filter sent-tech-api exec tsx scripts/seed.ts"
+	$(COMPOSE) run --rm -e DATABASE_URL=$(DATABASE_URL) $(WORKSPACE_SERVICE) bash -lc "set -euo pipefail; npm exec --workspace=sent-tech-api tsx scripts/seed.ts"
 
 clean:
 	$(COMPOSE) down --remove-orphans --volumes

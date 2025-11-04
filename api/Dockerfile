@@ -1,8 +1,7 @@
 FROM node:20-alpine
 WORKDIR /app
-COPY package.json pnpm-lock.yaml* ./
-RUN npm install -g pnpm@8.15.4
-RUN pnpm install --frozen-lockfile || pnpm install
+COPY package*.json ./
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 COPY . .
-RUN pnpm build
+RUN npm run build
 CMD ["node", "dist/index.js"]

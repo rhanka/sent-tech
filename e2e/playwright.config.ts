@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './tests',
   timeout: 60_000,
   webServer: {
-    command: 'pnpm --filter sent-tech-ui dev -- --host 0.0.0.0 --port 4173',
+    command: 'npm run dev --workspace=sent-tech-ui -- --host 0.0.0.0 --port 4173',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000

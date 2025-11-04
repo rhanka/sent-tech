@@ -2,13 +2,7 @@
   "name": "sent-tech",
   "private": true,
   "version": "0.1.0",
-  "packageManager": "pnpm@8.15.4",
-  "scripts": {
-    "lint": "pnpm -r lint",
-    "test": "pnpm -r test",
-    "build": "pnpm -r build",
-    "dev": "pnpm -r dev"
-  },
+  "packageManager": "npm@10.5.0",
   "workspaces": [
     "api",
     "ui",
