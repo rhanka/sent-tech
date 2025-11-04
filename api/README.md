@@ -2,20 +2,20 @@
 
 API REST construite avec Hono, Drizzle et Zod.
 
-## Commandes
+## Commandes (via Docker)
 
 ```bash
-pnpm install
-pnpm dev
-pnpm test
-pnpm lint
+make install               # installe toutes les dépendances pnpm dans les conteneurs
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-api dev"
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-api test"
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-api lint"
 ```
 
-## Migrations
+## Migrations & seed
 
 ```bash
-pnpm drizzle-kit generate
-pnpm drizzle-kit push
+make migrate
+make seed
 ```
 
-Les migrations utilisent le schéma défini dans `src/db/schema.ts`.
+Ces commandes supposent que Postgres tourne via `docker compose up -d db` et utilisent le schéma défini dans `src/db/schema.ts`.

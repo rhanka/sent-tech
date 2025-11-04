@@ -2,13 +2,13 @@
 
 SPA SvelteKit statique consommant l'API Hono.
 
-## Commandes
+## Commandes (via Docker)
 
 ```bash
-pnpm install
-pnpm dev
-pnpm build
-pnpm test
+make install
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-ui dev -- --host 0.0.0.0 --port 5173"
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-ui build"
+docker compose run --rm workspace bash -lc "corepack enable; pnpm --filter sent-tech-ui test"
 ```
 
 ## i18n

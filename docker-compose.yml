@@ -33,5 +33,31 @@ services:
     ports:
       - "5173:80"
 
+  workspace:
+    image: node:20-bullseye
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - pnpm-store:/root/.local/share/pnpm/store/v3
+    environment:
+      PNPM_HOME: /root/.local/share/pnpm
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+
+  e2e:
+    build: ./e2e
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - pnpm-store:/root/.local/share/pnpm/store/v3
+      - playwright-cache:/ms-playwright
+    environment:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      CI: "1"
+    depends_on:
+      - api
+    command: pnpm --filter sent-tech-e2e test
+
 volumes:
   db-data:
+  pnpm-store:
+  playwright-cache:

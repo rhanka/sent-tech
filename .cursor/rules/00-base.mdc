@@ -2,7 +2,7 @@
 
 Ces consignes couvrent tout le dépôt et sont pensées pour un flux de travail **gpt-5-codex**.
 
-- Utilise `pnpm` pour toutes les commandes Node et respecte la structure des workspaces (`sent-tech-api`, `sent-tech-ui`, `sent-tech-e2e`).
+- Utilise exclusivement les cibles Make + Docker Compose pour lancer `pnpm` dans les conteneurs (`workspace`, `e2e`) et respecte la structure des workspaces (`sent-tech-api`, `sent-tech-ui`, `sent-tech-e2e`). Aucune exécution locale de pnpm/npm.
 - Code en TypeScript strict (ESM) et suis les patterns Hono/SvelteKit existants. N'ajoute aucune librairie hors stack autorisée.
 - Garantis l'exécution des tests via `make test`, `make test-api`, `make test-ui` et `make test-e2e`, localement comme en CI.
 - Documente toute nouvelle commande ou variable d'environnement dans les README concernés en restant cohérent avec le projet de référence.
