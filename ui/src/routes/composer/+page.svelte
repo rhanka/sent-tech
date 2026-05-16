@@ -29,34 +29,34 @@
     unsubscribers.forEach((unsubscribe) => unsubscribe());
   });
 
-  const handleCompose = async (event: CustomEvent<{ missionId: string; serviceIds: string[]; assetIds: string[] }>) => {
+  const handleCompose = async (detail: { missionId: string; serviceIds: string[]; assetIds: string[] }) => {
     const payload = {
       type: 'offer_html',
       payload: {
-        missionId: event.detail.missionId,
-        serviceIds: event.detail.serviceIds,
-        assetIds: event.detail.assetIds,
+        missionId: detail.missionId,
+        serviceIds: detail.serviceIds,
+        assetIds: detail.assetIds,
         templateId: 'offer-html-fr'
       }
     };
     lastJob = await exportsStore.create(payload);
   };
 
-  const handleExport = async (event: CustomEvent<{ type: string }>) => {
+  const handleExport = async (detail: { type: string }) => {
     if (!lastJob) return;
     const previousPayload = (lastJob.payload ?? {}) as Record<string, unknown>;
     lastJob = await exportsStore.create({
-      type: event.detail.type,
+      type: detail.type,
       payload: {
         missionId: previousPayload.missionId ?? '',
         serviceIds: (previousPayload.serviceIds as string[] | undefined) ?? [],
         assetIds: (previousPayload.assetIds as string[] | undefined) ?? [],
-        templateId: event.detail.type === 'case_study' ? 'case-study-fr' : 'offer-html-fr'
+        templateId: detail.type === 'case_study' ? 'case-study-fr' : 'offer-html-fr'
       }
     });
   };
 </script>
 
 <h2>Composer une offre</h2>
-<OfferComposer {missions} {services} {assets} on:compose={handleCompose} />
-<ExportPanel {lastJob} on:export={handleExport} />
+<OfferComposer {missions} {services} {assets} oncompose={handleCompose} />
+<ExportPanel {lastJob} onexport={handleExport} />

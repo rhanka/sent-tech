@@ -1,5 +1,6 @@
 <script lang="ts">
   import MissionForm from '$lib/components/MissionForm.svelte';
+  import { Link } from '@sentropic/design-system-svelte';
   import { missionsStore } from '$lib/stores/missions';
   import { onDestroy, onMount } from 'svelte';
 
@@ -16,16 +17,27 @@
     unsubscribe?.();
   });
 
-  const handleSubmit = async (event: CustomEvent<{ title: string; context: string }>) => {
-    await missionsStore.add({ title: event.detail.title, context: event.detail.context });
+  const handleSubmit = async (payload: { title: string; context: string }) => {
+    await missionsStore.add({ title: payload.title, context: payload.context });
   };
 </script>
 
 <h2>Missions</h2>
-<MissionForm on:submit={handleSubmit} />
+<MissionForm onsubmit={handleSubmit} />
 
-<ul>
-  {#each missions as mission}
-    <li>{mission.title}</li>
+<ul class="missions">
+  {#each missions as mission (mission.id)}
+    <li>
+      <Link href={`/missions/${mission.id}`}>{mission.title}</Link>
+    </li>
   {/each}
 </ul>
+
+<style>
+  .missions {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+</style>
