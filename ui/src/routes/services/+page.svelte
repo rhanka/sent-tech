@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Card } from '@sentropic/design-system-svelte';
   import { servicesStore } from '$lib/stores/services';
   import { onDestroy, onMount } from 'svelte';
 
@@ -17,13 +18,23 @@
 </script>
 
 <h2>Catalogue de services</h2>
-<ul>
-  {#each services as service}
-    <li>
+<div class="services">
+  {#each services as service (service.id)}
+    <Card>
       <strong>{service.title}</strong>
       {#if service.summary}
         <p>{service.summary}</p>
       {/if}
-    </li>
+    </Card>
   {/each}
-</ul>
+</div>
+
+<style>
+  .services {
+    display: grid;
+    gap: 0.75rem;
+  }
+  p {
+    margin-block: 0.5rem 0;
+  }
+</style>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Link } from '@sentropic/design-system-svelte';
   import { exportsStore } from '$lib/stores/exports';
   import { onDestroy, onMount } from 'svelte';
 
@@ -16,13 +17,27 @@
 </script>
 
 <h2>Exports</h2>
-<ul>
-  {#each exportsList as job}
+<ul class="exports">
+  {#each exportsList as job (job.id)}
     <li>
-      {job.type} - {job.status}
+      <span>{job.type} - {job.status}</span>
       {#if job.resultUrl}
-        <a href={job.resultUrl} target="_blank" rel="noreferrer">Télécharger</a>
+        <Link href={job.resultUrl} external>Télécharger</Link>
       {/if}
     </li>
   {/each}
 </ul>
+
+<style>
+  .exports {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>

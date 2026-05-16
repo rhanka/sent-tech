@@ -2,6 +2,7 @@
   import { page } from '$app/stores';
   import { assetsStore } from '$lib/stores/assets';
   import AssetList from '$lib/components/AssetList.svelte';
+  import { Button } from '@sentropic/design-system-svelte';
   import { onDestroy, onMount } from 'svelte';
   import { get } from 'svelte/store';
 
@@ -27,5 +28,14 @@
 </script>
 
 <h2>Détails mission</h2>
-<button on:click={handleGenerate}>Générer des assets</button>
+<div class="actions">
+  <Button onclick={handleGenerate}>Générer des assets</Button>
+</div>
 <AssetList {assets} />
+
+<style>
+  .actions {
+    display: flex;
+    margin-block: 0.75rem;
+  }
+</style>
