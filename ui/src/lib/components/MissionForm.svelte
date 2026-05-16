@@ -1,27 +1,29 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher<{ submit: { title: string; context: string } }>();
+  import { Button, Input, Textarea } from '@sentropic/design-system-svelte';
 
-  let title = '';
-  let context = '';
+  type Props = {
+    onsubmit?: (payload: { title: string; context: string }) => void;
+  };
 
-  const onSubmit = () => {
-    dispatch('submit', { title, context });
+  let { onsubmit }: Props = $props();
+
+  let title = $state('');
+  let context = $state('');
+
+  const handleSubmit = (event: SubmitEvent) => {
+    event.preventDefault();
+    onsubmit?.({ title, context });
     title = '';
     context = '';
   };
 </script>
 
-<form on:submit|preventDefault={onSubmit} class="mission-form">
-  <label>
-    Titre
-    <input bind:value={title} required />
-  </label>
-  <label>
-    Contexte
-    <textarea bind:value={context} rows={4}></textarea>
-  </label>
-  <button type="submit">Ajouter</button>
+<form onsubmit={handleSubmit} class="mission-form">
+  <Input label="Titre" bind:value={title} required />
+  <Textarea label="Contexte" rows={4} bind:value={context} />
+  <div class="actions">
+    <Button type="submit">Ajouter</Button>
+  </div>
 </form>
 
 <style>
@@ -30,12 +32,7 @@
     gap: 0.75rem;
     max-width: 480px;
   }
-  label {
+  .actions {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  button {
-    justify-self: flex-start;
   }
 </style>
