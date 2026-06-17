@@ -1,0 +1,57 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: senttech
+      POSTGRES_PASSWORD: senttech
+      POSTGRES_DB: senttech
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  api:
+    build: ./api
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://senttech:senttech@db:5432/senttech
+      PORT: "8787"
+      OPENAI_API_KEY: changeme
+      CORS_ALLOWED_ORIGINS: http://ui:80,http://localhost:5173
+    ports:
+      - "8787:8787"
+
+  ui:
+    build: ./ui
+    depends_on:
+      - api
+    environment:
+      VITE_API_BASE_URL: http://api:8787/api/v1
+    ports:
+      - "5173:80"
+
+  workspace:
+    image: node:20-bullseye
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+
+  e2e:
+    build: ./e2e
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - playwright-cache:/ms-playwright
+    environment:
+      PLAYWRIGHT_BROWSERS_PATH: /ms-playwright
+      CI: "1"
+    depends_on:
+      - api
+    command: npm run test --workspace=sent-tech-e2e
+
+volumes:
+  db-data:
+  playwright-cache:

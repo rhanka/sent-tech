@@ -1,0 +1,10 @@
+node_modules
+.DS_Store
+.env
+.env.local
+.e2e-artifacts
+coverage
+build
+.svelte-kit
+.vscode
+.idea
