@@ -1,7 +1,7 @@
 <script lang="ts">
   import '../lib/i18n';
   import '../app.css';
-  import { ThemeProvider } from '@sentropic/design-system-svelte';
+  import { AppShell, ThemeProvider } from '@sentropic/design-system-svelte';
   import { sentTechTheme } from '@sentropic/design-system-themes';
 </script>
 
@@ -10,17 +10,28 @@
 </svelte:head>
 
 <ThemeProvider theme={sentTechTheme}>
-  <div class="app-shell">
-    <slot />
-  </div>
+  <AppShell variant="workspace" class="offer-builder-shell">
+    {#snippet main()}
+      <slot />
+    {/snippet}
+  </AppShell>
 </ThemeProvider>
 
 <style>
-  .app-shell {
-    min-height: 100vh;
-    padding: 1.5rem;
+  :global(.offer-builder-shell) {
+    min-block-size: 100vh;
+  }
+
+  :global(.offer-builder-shell .st-appShell__main) {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    :global(.offer-builder-shell .st-appShell__main) {
+      padding: 1rem;
+    }
   }
 </style>
