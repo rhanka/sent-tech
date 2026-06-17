@@ -19,6 +19,8 @@
 
 <style>
   :global(.offer-builder-shell) {
+    --st-component-navShell-width: 0rem;
+    --st-component-contextPanel-width: 0rem;
     min-block-size: 100vh;
   }
 
